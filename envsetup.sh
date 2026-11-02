@@ -152,6 +152,9 @@ function check_product()
     fi
     if (echo -n $1 | grep -q -e "^miku_") ; then
         MIKU_BUILD=$(echo -n $1 | sed -e 's/^miku_//g')
+    elif (echo -n $1 | grep -q -e "^lineage_") ; then
+        # LineageOS 23.2 device trees (lineage_<device>) build as Miku-Picked UI
+        MIKU_BUILD=$(echo -n $1 | sed -e 's/^lineage_//g')
     else
         MIKU_BUILD=
     fi
