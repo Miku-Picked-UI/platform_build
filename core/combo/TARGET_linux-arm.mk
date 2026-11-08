@@ -43,7 +43,9 @@ endif
 ifneq (,$(filter $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT), $(KNOWN_ARMv82a_CORES)))
   ifeq (,$(TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT))
     TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT := armv8-2a
-  else ifneq (armv8-2a,$(TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT))
+  # cortex-a76 is listed here by Miku UI, but LineageOS (which does not list it) device trees
+  # set armv8-a for it, so accept armv8-a for that core.
+  else ifneq (,$(filter-out armv8-2a $(if $(filter cortex-a76,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),armv8-a),$(TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT)))
     $(error Incorrect TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT, $(TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT). Use armv8-2a instead.)
   endif
 else ifneq (,$(filter $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT), $(KNOWN_ARMv8_CORES)))
